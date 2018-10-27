@@ -6,12 +6,14 @@
     state: present
 
 - name: Generate certificates
-  command: /usr/bin/certbot/certonly --agree-tos --email webmaster@{{ ansible_domain }} --domains {{ ansible_nodename }}
+  command: "/usr/bin/certbot certonly --agree-tos --email webmaster@{{ ansible_nodename }} --domains {{ ansible_nodename }} --standalone"
   args:
-    creates: /etc/letsencrypt/renewal/{{ ansible_nodename }}.conf
+    creates: "/etc/letsencrypt/renewal/{{ ansible_nodename }}.conf"
 
 - name: Configure certificate renewal service
-  template: src={{ item }}.j2 dest=/etc/systemd/system/{{ item }}
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/systemd/system/{{ item }}"
   with_items:
     - letsencrypt.service
     - letsencrypt.timer
