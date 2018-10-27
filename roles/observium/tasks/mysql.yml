@@ -3,13 +3,13 @@
 - name: Install requirements
   apt:
     name: python3-mysqldb
+    update_cache: yes
     state: present
 
 - name: Install package
   apt:
     name: mariadb-server
     state: present
-    update_cache: yes
   notify: restart mysql
 
 - name: Configure service
