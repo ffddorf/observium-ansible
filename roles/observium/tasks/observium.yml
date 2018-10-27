@@ -16,6 +16,7 @@
       - graphviz
       - imagemagick
       - syslog-ng
+      - python-mysqldb
     state: present
 
 - name: Download archive
