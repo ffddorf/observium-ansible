@@ -1,8 +1,10 @@
 ---
 
-- name: Install package
+- name: Install packages
   apt:
-    name: rrdcached
+    name:
+      - rrdtool
+      - rrdcached
     state: present
   notify: restart rrdcached
 
