@@ -1,0 +1,44 @@
+---
+
+- name: Install requirements
+  apt:
+    name: python3-mysqldb
+    state: present
+
+- name: Install package
+  apt:
+    name: mariadb-server
+    state: present
+    update_cache: yes
+  notify: restart mysql
+
+- name: Configure service
+  template:
+    src: mysql.cnf.j2
+    dest: /etc/mysql/conf.d/mysql.cnf
+  notify: restart mysql
+
+- name: Install mysqlcheck service
+  copy:
+    src: mysqlcheck.service
+    dest: /etc/systemd/system/
+  notify:
+    - restart mysqlcheck
+
+- name: Install mysqlcheck timer
+  copy:
+    src: mysqlcheck.timer
+    dest: /etc/systemd/system/
+  notify:
+    - restart mysqlcheck
+
+- name: Start and enable mysqlcheck timer
+  systemd:
+    name: mysqlcheck.timer
+    state: started
+    enabled: yes
+
+- name: Start and enable service
+  systemd:
+    name: mysql
+    enabled: yes

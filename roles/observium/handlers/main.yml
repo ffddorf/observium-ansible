@@ -1,0 +1,43 @@
+---
+
+- name: restart mysql
+  systemd:
+    name: mysql.service
+    state: restarted
+
+- name: restart nginx
+  systemd:
+    name: nginx
+    state: reloaded
+
+- name: restart php-fpm
+  systemd:
+    name: php7.2-fpm
+    state: reloaded
+
+- name: restart rrdcached
+  systemd:
+    name: rrdcached
+    state: restarted
+
+- name: restart mysqlcheck
+  systemd:
+    name: mysqlcheck.timer
+    state: restarted
+
+- name: update observium
+  command: ./discovery.php -u
+  args:
+    chdir: /opt/observium
+  become_user: www-data
+
+- name: restart letsencrypt timer
+  systemd:
+    name: letsencrypt.timer
+    state: restarted
+    daemon_reload: yes
+
+- name: restart syslog-ng
+  systemd:
+    name: syslog-ng.service
+    state: restarted

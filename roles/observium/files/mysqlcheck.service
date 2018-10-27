@@ -1,0 +1,7 @@
+[Unit]
+Description=Optimize all MySQL databases
+Requires=mysql.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/mysqlcheck -Aos

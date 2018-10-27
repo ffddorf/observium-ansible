@@ -1,0 +1,8 @@
+---
+
+- name: install Observium
+  hosts: observium
+  become: yes
+  become_user: root
+  roles:
+  - observium

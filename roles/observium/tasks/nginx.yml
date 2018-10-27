@@ -1,0 +1,46 @@
+---
+
+- name: Install package
+  apt:
+    name: nginx
+    state: present
+
+- name: Configure service
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx.conf
+  notify: restart nginx
+
+- name: Create configuration directory
+  file:
+    dest: /etc/nginx/conf.d
+    state: directory
+
+- name: Create site directory
+  file:
+    dest: /etc/nginx/sites-enabled
+    state: directory
+
+- name: Configure service
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+  notify: restart nginx
+
+- name: Configure HTTPS
+  template:
+    src: https.conf.j2
+    dest: /etc/nginx/conf.d/https.conf
+  notify: restart nginx
+
+- name: Configure PHP
+  template:
+    src: php.conf.j2
+    dest: /etc/nginx/conf.d/php.conf
+  notify: restart nginx
+
+- name: Start and enable service
+  service:
+    name: nginx
+    state: started
+    enabled: yes

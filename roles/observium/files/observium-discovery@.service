@@ -1,0 +1,7 @@
+[Unit]
+Description=Observium Discovery
+
+[Service]
+Type=oneshot
+ExecStart=/opt/observium/discovery.php -h %i
+User=www-data

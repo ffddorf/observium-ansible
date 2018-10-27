@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+
+server {
+  listen [::]:80 ipv6only=off;
+  server_name {{ ansible_nodename }};
+  location / {
+    return 301 https://$host$request_uri;
+  }
+}
+
+server {
+  listen [::]:443 ssl http2 ipv6only=off;
+  server_name {{ ansible_nodename }};
+  include conf.d/https.conf;
+  include conf.d/php.conf;
+  index index.php;
+  root /opt/observium/html;
+  location / {
+    try_files $uri $uri/ @observium;
+  }
+  location @observium {
+    rewrite ^(.+)$ /index.php/$1/ last;
+  }
+}

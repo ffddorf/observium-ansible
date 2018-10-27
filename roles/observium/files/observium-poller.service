@@ -1,0 +1,7 @@
+[Unit]
+Description=Observium Poller
+
+[Service]
+Type=oneshot
+ExecStart=/opt/observium/poller-wrapper.py 10
+User=www-data

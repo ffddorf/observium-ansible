@@ -1,0 +1,8 @@
+[Unit]
+Description=Letsencrypt certificate renewal
+After=network.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew --webroot --webroot-path /opt/observium
+ExecStartPost=/bin/systemctl reload nginx

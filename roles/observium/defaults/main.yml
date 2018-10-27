@@ -1,0 +1,4 @@
+---
+
+snmp_community: public
+observium_protocol: https

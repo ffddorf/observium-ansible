@@ -1,0 +1,117 @@
+---
+
+- name: Install requirements
+  apt:
+    name:
+      - php7.2-cli
+      - php7.2-mysql
+      - php7.2-gd
+      - php7.2-json
+      - php-pear
+      - snmp
+      - fping
+      - whois
+      - mtr-tiny
+      - ipmitool
+      - graphviz
+      - imagemagick
+      - syslog-ng
+    state: present
+
+- name: Download archive
+  get_url:
+    url: "http://www.observium.org/observium-community-latest.tar.gz"
+    dest: /var/tmp
+
+- name: Unzip archive
+  unarchive:
+    src: /var/tmp/observium-community-latest.tar.gz
+    dest: /opt
+    copy: no
+    owner: root
+    group: root
+  notify: update observium
+
+- name: Create log directory
+  file:
+    dest: /opt/observium/logs
+    state: directory
+    owner: www-data
+    group: www-data
+
+- name: Configure options
+  template: src=config.php.j2 dest=/opt/observium/config.php
+
+- name: Create MySQL database
+  mysql_db:
+    name: observium
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  register: db
+
+- name: Initialize MySQL database
+  command: /opt/observium/discovery.php -u
+  become_user: www-data
+  when: db is changed
+
+- name: Create MySQL user
+  mysql_user:
+    name: observium
+    password: observium
+    priv: observium.*:ALL
+    state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Configure services
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+  with_items:
+    - observium-discovery-all.timer
+    - observium-discovery-new.timer
+    - observium-discovery@.service
+    - observium-housekeeping.service
+    - observium-housekeeping.timer
+    - observium-poller.service
+    - observium-poller.timer
+  register: services
+
+- name: Reload systemd units
+  systemd:
+    daemon_reload: yes
+  when: services is changed
+
+- name: Enable systemd timers
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - observium-discovery-all.timer
+    - observium-discovery-new.timer
+    - observium-housekeeping.timer
+    - observium-poller.timer
+
+- name: Add webserver user to RRD group
+  user:
+    name: www-data
+    groups: rrd
+    append: yes
+
+- name: Configure website
+  template:
+    src: "observium-{{ observium_protocol }}.conf.j2"
+    dest: /etc/nginx/sites-enabled/observium.conf
+  notify: restart nginx
+
+- name: Configure syslog service
+  template:
+    src: syslog-ng.conf.j2
+    dest: /etc/syslog-ng/syslog-ng.conf
+  notify: restart syslog-ng
+
+- name: Start enable syslog service
+  service:
+    name: syslog-ng
+    state: started
+    enabled: yes

@@ -1,0 +1,7 @@
+[Unit]
+Description=Observium housekeeping
+
+[Service]
+Type=oneshot
+ExecStart=/opt/observium/housekeeping.php -ay
+User=www-data

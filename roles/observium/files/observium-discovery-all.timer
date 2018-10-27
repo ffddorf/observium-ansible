@@ -1,0 +1,10 @@
+[Unit]
+Description=Hourly Observium discovery of all hosts
+
+[Timer]
+Unit=observium-discovery@all.service
+OnUnitActiveSec=1h
+OnBootSec=0
+
+[Install]
+WantedBy=timers.target

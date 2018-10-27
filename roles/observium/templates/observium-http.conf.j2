@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+server {
+  listen [::]:80 ipv6only=off;
+  server_name {{ ansible_nodename }};
+  include conf.d/php.conf;
+  index index.php;
+  root /opt/observium/html;
+  location / {
+    try_files $uri $uri/ @observium;
+  }
+  location @observium {
+    rewrite ^(.+)$ /index.php/$1/ last;
+  }
+}
