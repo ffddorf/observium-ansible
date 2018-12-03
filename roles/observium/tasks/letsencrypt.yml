@@ -6,9 +6,10 @@
     state: present
 
 - name: Generate certificates
-  command: "/usr/bin/certbot certonly --agree-tos --email webmaster@{{ ansible_nodename }} --domains {{ ansible_nodename }} --standalone"
+  shell: "systemctl stop nginx && /usr/bin/certbot certonly --agree-tos --email webmaster@{{ observium_domain }} --domains {{ observium_domain }} --standalone"
   args:
-    creates: "/etc/letsencrypt/renewal/{{ ansible_nodename }}.conf"
+    creates: "/etc/letsencrypt/renewal/{{ observium_domain }}.conf"
+  notify: restart nginx
 
 - name: Configure certificate renewal service
   template:

@@ -2,3 +2,4 @@
 
 snmp_community: public
 observium_protocol: https
+observium_domain: observium.freifunk-duesseldorf.de

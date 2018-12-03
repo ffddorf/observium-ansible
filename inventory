@@ -1,2 +1,2 @@
 [observium]
-observium4.freifunk-duesseldorf.de ansible_ssh_user=root ansible_python_interpreter=/usr/bin/python3 observium_domain=observium.freifunk-duesseldorf.de
+observium4.freifunk-duesseldorf.de ansible_ssh_user=root ansible_python_interpreter=/usr/bin/python3
