@@ -1,0 +1,13 @@
+---
+- name: Create mountpoints
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "0755"
+  with_items: "{{ volumes | default([]) }}"
+
+- name: Configure additional volumes
+  lineinfile:
+    path: /etc/fstab
+    line: "{{ item.dev }} {{ item.path }} {{ item.opts }}"
+  with_items: "{{ volumes | default([]) }}"
