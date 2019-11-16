@@ -1,0 +1,7 @@
+---
+volumes:
+  - dev: /dev/disk/by-id/scsi-0HC_Volume_3393489
+    path: /mnt/observium-cache-1
+    opts: "ext4 discard,nofail,defaults 0 0"
+
+observium_cache_dir: /mnt/observium-cache-1/rrdcached

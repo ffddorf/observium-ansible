@@ -5,7 +5,7 @@ Description=Data caching daemon for rrdtool
 Documentation=man:rrdcached(1)
 
 [Service]
-ExecStart=/usr/bin/rrdcached -w 1800 -z 1800 -f 3600 -s rrd -l unix:/run/rrdcached.sock -j /var/lib/rrdcached/journal/ -F -b /var/lib/rrdcached/rrd/ -B -g
+ExecStart=/usr/bin/rrdcached -w 1800 -z 1800 -f 3600 -s rrd -l unix:/run/rrdcached.sock -j {{ observium_cache_dir }}/journal/ -F -b {{ observium_cache_dir }}/rrd/ -B -g
 
 [Install]
 WantedBy=multi-user.target

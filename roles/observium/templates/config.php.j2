@@ -17,7 +17,7 @@ $config['snmp']['transports'] = array('udp6', 'udp');
 $config['auth_mechanism'] = "mysql";
 $config['enable_syslog'] = 1;
 
-$config['rrd_dir'] = "/var/lib/rrdcached/rrd";
+$config['rrd_dir'] = "{{ observium_cache_dir }}/rrd";
 $config['rrdcached'] = "unix:/run/rrdcached.sock";
 
 $config['housekeeping']['syslog']['age'] = 86400;

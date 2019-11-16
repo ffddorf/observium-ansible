@@ -1,5 +1,4 @@
 ---
-
 - name: Install packages
   apt:
     name:
@@ -20,8 +19,8 @@
     state: directory
     group: rrd
   with_items:
-    - /var/lib/rrdcached/rrd
-    - /var/lib/rrdcached/journal
+    - "{{ observium_cache_dir }}/rrd"
+    - "{{ observium_cache_dir }}/journal"
 
 - name: Configure service
   template:
