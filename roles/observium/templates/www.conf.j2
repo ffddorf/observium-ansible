@@ -8,4 +8,4 @@ listen.owner = www-data
 listen.group = www-data
 
 pm = static
-pm.max_children = {{ ( ansible_memtotal_mb / 40 ) | int }}
+pm.max_children = 15
