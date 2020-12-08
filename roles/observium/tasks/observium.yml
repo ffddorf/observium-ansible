@@ -98,7 +98,8 @@
 - name: Add webserver user to RRD group
   user:
     name: www-data
-    groups: rrd
+    groups:
+      - rrd
     append: yes
 
 - name: Configure website
