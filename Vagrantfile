@@ -12,7 +12,8 @@ Vagrant.configure("2") do |config|
       "observium" => ["default"],
       "observium:vars" => {
         "observium_domain" => "localhost",
-        "observium_protocol" => "http"
+        "observium_protocol" => "http",
+        "observium_port" => 8080
       }
     }
     ansible.extra_vars = {

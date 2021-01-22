@@ -1,6 +1,7 @@
 <?php
 # {{ ansible_managed }}
 
+$config['base_url'] = "{{ observium_protocol }}://{{ observium_domain }}:{{ observium_port }}";
 $config['web_url'] = "{{ observium_protocol }}://{{ observium_domain }}/";
 
 $config['db_host'] = 'localhost';

@@ -3,3 +3,4 @@ snmp_community: public
 observium_protocol: https
 observium_domain: observium.freifunk-duesseldorf.de
 observium_cache_dir: /var/lib/rrdcached
+observium_port: 443
