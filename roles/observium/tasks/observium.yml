@@ -52,8 +52,9 @@
   register: db
 
 - name: Initialize MySQL database
-  command: sudo -u www-data /opt/observium/discovery.php -u
+  command: /opt/observium/discovery.php -u
   when: db is changed
+  become_user: www-data
 
 - name: Create MySQL user
   mysql_user:
