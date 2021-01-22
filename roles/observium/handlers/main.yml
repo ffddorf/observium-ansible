@@ -8,7 +8,7 @@
 - name: restart nginx
   systemd:
     name: nginx
-    state: reloaded
+    state: restarted
 
 - name: restart php-fpm
   systemd:
