@@ -2,17 +2,17 @@
 
 - name: Install package
   apt:
-    name: php7.2-fpm
+    name: php7.4-fpm
     state: present
   notify: restart php-fpm
 
 - name: Configure service
   template:
     src: www.conf.j2
-    dest: /etc/php/7.2/fpm/pool.d/www.conf
+    dest: /etc/php/7.4/fpm/pool.d/www.conf
   notify: restart php-fpm
 
 - name: Enable service
   systemd:
-    name: php7.2-fpm
+    name: php7.4-fpm
     enabled: yes

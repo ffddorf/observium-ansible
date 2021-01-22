@@ -12,7 +12,7 @@
 
 - name: restart php-fpm
   systemd:
-    name: php7.2-fpm
+    name: php7.4-fpm
     state: reloaded
 
 - name: restart rrdcached
