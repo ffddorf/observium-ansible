@@ -18,6 +18,7 @@
     dest: "{{ item }}"
     state: directory
     group: rrd
+    mode: '0775'
   with_items:
     - "{{ observium_cache_dir }}/rrd"
     - "{{ observium_cache_dir }}/journal"
