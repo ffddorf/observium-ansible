@@ -1,7 +1,7 @@
 <?php
 # {{ ansible_managed }}
 
-$config['web_url'] = "https://observium.freifunk-duesseldorf.de/";
+$config['web_url'] = "{{ observium_protocol }}://{{ observium_domain }}/";
 
 $config['db_host'] = 'localhost';
 $config['db_user'] = 'observium';
@@ -33,6 +33,6 @@ $config['device_traffic_iftype'] = array('/loopback/','/tunnel/','/virtual/','/m
 $config['device_traffic_descr'] = array('/loopback/','/vlan/','/tunnel/','/:\d+/','/gretap\d+/','/l2tp\d+/','/tun-.+/','/dummy\d+/','/supernode/','/bat\d+/','/br\d+/','/alfred\d+/','/tap\d+/','/bb-.*/','/tap-.*/');
 $config['bad_if_regexp'][] = "/l2tp/";
 
-$config['web_session_ip'] = FALSE; 
+$config['web_session_ip'] = FALSE;
 
 // End config.php

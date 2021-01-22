@@ -11,6 +11,7 @@ Vagrant.configure("2") do |config|
     ansible.groups = {
       "observium" => ["default"],
       "observium:vars" => {
+        "observium_domain" => "localhost",
         "observium_protocol" => "http"
       }
     }
@@ -18,5 +19,7 @@ Vagrant.configure("2") do |config|
       "ansible_python_interpreter" => "/usr/bin/python3"
     }
   end
+
+  config.vm.network "forwarded_port", guest: 80, host: 8080
 
 end
