@@ -16,6 +16,7 @@
       - graphviz
       - imagemagick
       - syslog-ng
+      - python3-pymysql
     state: present
 
 - name: Download archive
