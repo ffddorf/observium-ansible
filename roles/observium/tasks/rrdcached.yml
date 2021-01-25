@@ -1,5 +1,5 @@
 ---
-- name: Install packages
+- name: Install rrdcached packages
   apt:
     name:
       - rrdtool
@@ -7,13 +7,13 @@
     state: present
   notify: restart rrdcached service
 
-- name: Create system group
+- name: Create rrdcached system group
   group:
     name: rrd
     system: yes
     state: present
 
-- name: Create data directories
+- name: Create rrdcached data directories
   file:
     dest: "{{ item }}"
     state: directory
@@ -23,13 +23,13 @@
     - "{{ observium_cache_dir }}/rrd"
     - "{{ observium_cache_dir }}/journal"
 
-- name: Configure service
+- name: Configure rrdcached service
   template:
     src: rrdcached.service.j2
     dest: /etc/systemd/system/rrdcached.service
   notify: restart rrdcached service
 
-- name: Start and enable service
+- name: Start and enable rrdcached service
   systemd:
     name: rrdcached.service
     state: started

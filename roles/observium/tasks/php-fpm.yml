@@ -1,18 +1,18 @@
 ---
 
-- name: Install package
+- name: Install php-fpm package
   apt:
     name: php7.4-fpm
     state: present
   notify: restart php-fpm service
 
-- name: Configure service
+- name: Configure php-fpm service
   template:
     src: www.conf.j2
     dest: /etc/php/7.4/fpm/pool.d/www.conf
   notify: restart php-fpm service
 
-- name: Start and enable service
+- name: Start and enable php-fpm service
   systemd:
     name: php7.4-fpm.service
     state: started

@@ -1,31 +1,31 @@
 ---
 
-- name: Install requirements
+- name: Install Let's Encrypt requirements
   apt:
     name: letsencrypt
     state: present
 
-- name: Generate certificates
+- name: Generate Let's Encrypt certificates
   shell: "systemctl stop nginx && /usr/bin/certbot certonly --agree-tos --email webmaster@{{ observium_domain }} --domains {{ observium_domain }} --standalone"
   args:
     creates: "/etc/letsencrypt/renewal/{{ observium_domain }}.conf"
   notify: restart nginx service
 
-- name: Configure certificate renewal service
+- name: Configure Let's Encrypt certificate renewal service
   file:
     src: letsencrypt.service
     dest: /etc/systemd/system/letsencrypt.service
   notify:
     - restart letsencrypt timer
 
-- name: Configure certificate renewal timer
+- name: Configure Let's Encrypt certificate renewal timer
   file:
     src: letsencrypt.timer
     dest: /etc/systemd/system/letsencrypt.timer
   notify:
     - restart letsencrypt timer
 
-- name: Start and enable certificate renewal timer
+- name: Start and enable Let's Encrypt certificate renewal timer
   systemd:
     name: letsencrypt.timer
     enabled: yes
