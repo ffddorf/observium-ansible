@@ -106,16 +106,16 @@
   template:
     src: "observium-{{ observium_protocol }}.conf.j2"
     dest: /etc/nginx/sites-enabled/observium.conf
-  notify: restart nginx
+  notify: restart nginx service
 
 - name: Configure syslog service
   template:
     src: syslog-ng.conf.j2
     dest: /etc/syslog-ng/syslog-ng.conf
-  notify: restart syslog-ng
+  notify: restart syslog-ng service
 
 - name: Start enable syslog service
-  service:
-    name: syslog-ng
+  systemd:
+    name: syslog-ng.service
     state: started
     enabled: yes

@@ -1,29 +1,30 @@
 ---
 
-- name: restart mysql
+- name: restart mariadb service
   systemd:
-    name: mysql.service
+    name: mariadb.service
     state: restarted
 
-- name: restart nginx
+- name: restart nginx service
   systemd:
-    name: nginx
+    name: nginx.service
     state: restarted
 
-- name: restart php-fpm
+- name: restart php-fpm service
   systemd:
-    name: php7.4-fpm
+    name: php7.4-fpm.service
     state: reloaded
 
-- name: restart rrdcached
+- name: restart rrdcached service
   systemd:
-    name: rrdcached
+    name: rrdcached.service
     state: restarted
 
-- name: restart mysqlcheck
+- name: restart mysqlcheck service
   systemd:
     name: mysqlcheck.timer
     state: restarted
+    daemon_reload: yes
 
 - name: update observium
   command: ./discovery.php -u
@@ -37,7 +38,7 @@
     state: restarted
     daemon_reload: yes
 
-- name: restart syslog-ng
+- name: restart syslog-ng service
   systemd:
     name: syslog-ng.service
     state: restarted

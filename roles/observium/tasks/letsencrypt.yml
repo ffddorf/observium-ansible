@@ -9,15 +9,19 @@
   shell: "systemctl stop nginx && /usr/bin/certbot certonly --agree-tos --email webmaster@{{ observium_domain }} --domains {{ observium_domain }} --standalone"
   args:
     creates: "/etc/letsencrypt/renewal/{{ observium_domain }}.conf"
-  notify: restart nginx
+  notify: restart nginx service
 
 - name: Configure certificate renewal service
-  template:
-    src: "{{ item }}.j2"
-    dest: "/etc/systemd/system/{{ item }}"
-  with_items:
-    - letsencrypt.service
-    - letsencrypt.timer
+  file:
+    src: letsencrypt.service
+    dest: /etc/systemd/system/letsencrypt.service
+  notify:
+    - restart letsencrypt timer
+
+- name: Configure certificate renewal timer
+  file:
+    src: letsencrypt.timer
+    dest: /etc/systemd/system/letsencrypt.timer
   notify:
     - restart letsencrypt timer
 

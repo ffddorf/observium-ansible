@@ -1,5 +1,5 @@
 [Unit]
-Description=Daily mysqlcheck
+Description=Daily MySQL database check
 
 [Timer]
 OnBootSec=5 min

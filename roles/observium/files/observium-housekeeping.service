@@ -1,5 +1,6 @@
 [Unit]
 Description=Observium housekeeping
+Requires=mariadb.service
 
 [Service]
 Type=oneshot

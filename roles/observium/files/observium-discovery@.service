@@ -1,5 +1,7 @@
 [Unit]
 Description=Observium Discovery
+Requires=mariadb.service
+After=network.target
 
 [Service]
 Type=oneshot

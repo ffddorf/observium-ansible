@@ -1,5 +1,7 @@
 [Unit]
 Description=Observium Poller
+Requires=mariadb.service
+After=network.target
 
 [Service]
 Type=oneshot

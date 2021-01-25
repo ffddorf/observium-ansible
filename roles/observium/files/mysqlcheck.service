@@ -1,6 +1,6 @@
 [Unit]
 Description=Optimize all MySQL databases
-Requires=mysql.service
+Requires=mariadb.service
 
 [Service]
 Type=oneshot

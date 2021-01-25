@@ -5,7 +5,7 @@
       - rrdtool
       - rrdcached
     state: present
-  notify: restart rrdcached
+  notify: restart rrdcached service
 
 - name: Create system group
   group:
@@ -27,10 +27,10 @@
   template:
     src: rrdcached.service.j2
     dest: /etc/systemd/system/rrdcached.service
-  notify: restart rrdcached
+  notify: restart rrdcached service
 
-- name: Enable service
-  service:
-    name: rrdcached
+- name: Start and enable service
+  systemd:
+    name: rrdcached.service
     state: started
     enabled: yes

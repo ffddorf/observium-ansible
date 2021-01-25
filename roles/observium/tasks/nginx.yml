@@ -9,7 +9,7 @@
   template:
     src: nginx.conf.j2
     dest: /etc/nginx.conf
-  notify: restart nginx
+  notify: restart nginx service
 
 - name: Create configuration directory
   file:
@@ -25,22 +25,22 @@
   template:
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
-  notify: restart nginx
+  notify: restart nginx service
 
 - name: Configure HTTPS
   template:
     src: https.conf.j2
     dest: /etc/nginx/conf.d/https.conf
-  notify: restart nginx
+  notify: restart nginx service
 
 - name: Configure PHP
   template:
     src: php.conf.j2
     dest: /etc/nginx/conf.d/php.conf
-  notify: restart nginx
+  notify: restart nginx service
 
 - name: Start and enable service
-  service:
-    name: nginx
+  systemd:
+    name: nginx.service
     state: started
     enabled: yes

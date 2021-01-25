@@ -10,27 +10,27 @@
   apt:
     name: mariadb-server
     state: present
-  notify: restart mysql
+  notify: restart mariadb service
 
 - name: Configure service
   template:
     src: mysql.cnf.j2
     dest: /etc/mysql/conf.d/mysql.cnf
-  notify: restart mysql
+  notify: restart mariadb service
 
 - name: Install mysqlcheck service
   copy:
     src: mysqlcheck.service
     dest: /etc/systemd/system/
   notify:
-    - restart mysqlcheck
+    - restart mysqlcheck service
 
 - name: Install mysqlcheck timer
   copy:
     src: mysqlcheck.timer
     dest: /etc/systemd/system/
   notify:
-    - restart mysqlcheck
+    - restart mysqlcheck service
 
 - name: Start and enable mysqlcheck timer
   systemd:
@@ -38,7 +38,8 @@
     state: started
     enabled: yes
 
-- name: Start and enable service
+- name: Start and enable mariadb service
   systemd:
-    name: mysql
+    name: mariadb.service
+    state: started
     enabled: yes

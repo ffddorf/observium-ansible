@@ -3,3 +3,6 @@ Description=Daily Letsencrypt certificate renewal
 
 [Timer]
 OnCalendar=daily
+
+[Install]
+WantedBy=timers.target
