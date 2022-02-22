@@ -12,14 +12,14 @@
   notify: restart nginx service
 
 - name: Configure Let's Encrypt certificate renewal service
-  file:
+  copy:
     src: letsencrypt.service
     dest: /etc/systemd/system/letsencrypt.service
   notify:
     - restart letsencrypt timer
 
 - name: Configure Let's Encrypt certificate renewal timer
-  file:
+  copy:
     src: letsencrypt.timer
     dest: /etc/systemd/system/letsencrypt.timer
   notify:
